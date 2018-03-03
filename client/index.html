@@ -271,7 +271,7 @@
 
                 actual_position = { lat: data.Latitude, lon: data.Longitude, heading: data.Heading, altitude: data.Altitude };
                 current.html("Lat: " + data.Latitude + " Lon: " + data.Longitude + "<br />Altitude: " + data.Altitude);
-                path({type: "LineString", coordinates: [[-0.8432, 51.4102],[-122.2744, 37.7561]] });
+                //path({type: "LineString", coordinates: [[-0.8432, 51.4102],[-122.2744, 37.7561]] });
             });
             socket.on('exception', function(data) {
                 console.log('[ecxeption] Data:', data);
