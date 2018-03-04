@@ -11,9 +11,15 @@ import "rxjs/add/observable/timer";
 import "rxjs/add/operator/timestamp";
 import {watch} from 'chokidar';
 import {readFileSync} from 'fs';
+import {join} from "path";
+import {homedir} from "os";
 
 @WebSocketGateway()
 export class EventsGateway {
+
+    directory       = join(homedir(), 'Saved Games', 'Frontier Developments', 'Elite Dangerous');
+    fileName        = 'Status.json';
+    statusJSONPath  = join(this.directory, this.fileName);
 
     @WebSocketServer() server;
 
@@ -22,24 +28,12 @@ export class EventsGateway {
         const event = 'events';
         const watcher =
             Observable.fromEvent(
-                watch(this.getStatusFilePath(), { awaitWriteFinish: { stabilityThreshold: 10 } }),
+                watch(this.statusJSONPath, { awaitWriteFinish: { stabilityThreshold: 10 } }),
                 'change'
             );
 
         return watcher.map((filename, index) => {
-            return {event, data: JSON.parse(readFileSync(this.getStatusFilePath(), "utf8"))};
+            return {event, data: JSON.parse(readFileSync(this.statusJSONPath, "utf8"))};
         });
-    }
-
-    getStatusFilePath(): string {
-        return process.platform === 'win32' ?
-            // On MS Windows...
-            this.getUserHome() + "/Saved Games/Frontier Developments/Elite Dangerous/Status.json" :
-            // On MAC... ToDo: this need change...
-            this.getUserHome() + "/Saved Games/Frontier Developments/Elite Dangerous/Status.json";
-    }
-
-    getUserHome(): string {
-        return process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
     }
 }
