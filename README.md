@@ -1,3 +1,9 @@
+Run npm install.
+Run server npm run start.
+Open client/index.html in your browser - hit F12 and look at Javascript console.
+Open Elite Dangerous and go to somewhere over planet surface.
+
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="http://kamilmysliwiec.com/public/nest-logo.png#1" alt="Nest Logo" /></a>
 </p>
